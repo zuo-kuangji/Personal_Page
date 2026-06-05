@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#e8e1d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="400" cy="330" r="132" fill="#d8d0c3"/>
+  <path d="M170 910c28-190 116-306 230-306s202 116 230 306" fill="#c9c0b1"/>
+  <path d="M168 190c118-86 253-108 405-66" fill="none" stroke="#3d8d86" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="570" cy="145" r="18" fill="#b84c43"/>
+  <path d="M126 812c139-63 306-70 548-24" fill="none" stroke="#b84c43" stroke-width="14" stroke-linecap="round" opacity=".72"/>
+  <text x="400" y="780" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#161716">ZUO Kuangji</text>
+  <text x="400" y="834" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#696965">replace with portrait.jpg</text>
+</svg>

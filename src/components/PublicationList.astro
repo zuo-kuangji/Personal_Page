@@ -1,0 +1,29 @@
+---
+import { publications } from "../content/publications";
+---
+
+<div class="space-y-4">
+  {publications.map((pub) => (
+    <article class="grid gap-4 rounded-md border border-rule bg-card p-4 shadow-[0_10px_30px_rgba(22,23,22,0.04)] md:grid-cols-[220px_1fr]">
+      <img
+        class="aspect-[16/10] w-full rounded border border-rule bg-paper object-contain"
+        src={pub.image}
+        alt={`${pub.title} preview`}
+        loading="lazy"
+      />
+      <div>
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span class="text-sm font-semibold text-red">{pub.year}</span>
+          <span class="text-sm font-medium text-ink">{pub.venue}</span>
+        </div>
+        <h3 class="mt-2 text-lg font-semibold leading-snug text-ink">{pub.title}</h3>
+        <p class="mt-2 text-sm leading-6 text-muted">{pub.authors}</p>
+        <div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold">
+          {pub.links.map((link) => (
+            <a class="text-ink underline decoration-rule underline-offset-4 hover:text-red" href={link.href}>{link.label}</a>
+          ))}
+        </div>
+      </div>
+    </article>
+  ))}
+</div>
