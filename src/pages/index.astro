@@ -3,12 +3,43 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import PublicationList from "../components/PublicationList.astro";
-import { profile, researchDirections } from "../content/profile";
+import { profile, researchDirections, sameAsLinks } from "../content/profile";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  alternateName: [profile.chineseName, profile.displayName, ...profile.aliases],
+  url: profile.homepage,
+  image: `${profile.homepage}${profile.portrait}`,
+  email: "mailto:kuangji001@e.ntu.edu.sg",
+  jobTitle: profile.role,
+  affiliation: {
+    "@type": "Organization",
+    name: "MARS Lab, Nanyang Technological University",
+    url: "https://www.ntu.edu.sg/",
+  },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Nanyang Technological University",
+    url: "https://www.ntu.edu.sg/",
+  },
+  advisor: {
+    "@type": "Person",
+    name: profile.advisor.name,
+    url: profile.advisor.url,
+  },
+  knowsAbout: profile.seoKeywords,
+  sameAs: sameAsLinks,
+};
 ---
 
 <BaseLayout
-  title={`${profile.name} | Embodied AI, Humanoid Robotics, HRI`}
-  description="Personal academic homepage of Kuangji Zuo, focused on embodied intelligence, whole-body VLA, gaze-conditioned robot learning, and human-robot interaction."
+  title={`${profile.name} (${profile.chineseName}) | Embodied AI, Humanoid Robotics, VLA`}
+  description="Kuangji Zuo (左匡济) is a graduate researcher at NTU MARS Lab working on embodied AI, humanoid robotics, human-robot interaction, VLA, whole-body action models, WAM, and intent-aware robot learning."
+  keywords={profile.seoKeywords}
+  canonical={profile.homepage}
+  structuredData={structuredData}
 >
   <header class="sticky top-0 z-50 border-b border-rule bg-paper/90 backdrop-blur">
     <nav class="mx-auto flex h-12 max-w-5xl items-center gap-5 overflow-x-auto px-5 text-sm sm:justify-between sm:px-8">
@@ -50,6 +81,9 @@ import { profile, researchDirections } from "../content/profile";
         </p>
         <p>
           I work on robot policies that connect high-level human intent with physically grounded action, with a focus on ambiguous interaction settings where gaze, language, and context can help robots choose the right behavior.
+        </p>
+        <p>
+          Search and research keywords associated with my work include embodied AI, humanoid robotics, human-robot interaction, VLA, whole-body VLA, whole-body action models, WAM, gaze-conditioned robot learning, and intent-aware robot policies.
         </p>
       </div>
     </section>

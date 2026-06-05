@@ -1,0 +1,12 @@
+# Kuangji Zuo
+
+Kuangji Zuo, also known as ZUO Kuangji and 左匡济, is a graduate researcher at NTU MARS Lab in Singapore, advised by Prof. Jianfei Yang.
+
+Research focus: embodied AI, humanoid robotics, human-robot interaction, vision-language-action models, VLA, whole-body VLA, whole-body action models, WAM, gaze-conditioned robot learning, and intent-aware robot policies.
+
+Homepage: https://kuangjizuo.com/
+Email: kuangji001@e.ntu.edu.sg
+Google Scholar: https://scholar.google.com/citations?user=w64ThA4AAAAJ&hl=zh-CN&oi=sra
+GitHub: https://github.com/zuo-kuangji
+LinkedIn: https://sg.linkedin.com/in/kuangjizuo/en
+X: https://x.com/rob22oo22
