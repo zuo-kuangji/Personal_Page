@@ -1,4 +1,30 @@
+# Search engines and AI agents are welcome to read and cite this page.
 User-agent: *
 Allow: /
 
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Agent-friendly summaries: https://kuangjizuo.com/llms.txt and https://kuangjizuo.com/index.md
 Sitemap: https://kuangjizuo.com/sitemap.xml

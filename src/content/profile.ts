@@ -10,7 +10,15 @@ export const profile = {
   },
   email: "kuangji001@e.ntu.edu.sg",
   portrait: "/images/kuangji-zuo-portrait-800.jpg",
+  banner: "/images/robotics-lab-hero.jpg",
   location: "Singapore",
+  /** Bio in Markdown (**bold**, [links](url)); reused by the page, llms.txt and index.md. */
+  bio: [
+    "I am a graduate researcher at **MARS Lab**, Nanyang Technological University, advised by [Prof. Jianfei Yang](https://marsyang.site/).",
+    "My research lies at the intersection of **robot learning** and **humanoid robotics**, with a focus on **vision-language-action (VLA) models**, **world action models**, and **generative action policies** such as flow matching and neural ODEs. I am also interested in **human-robot interaction**, especially how people can guide robots through gaze and language.",
+    "I build and test these policies on real hardware, mainly **humanoids with dexterous hands**.",
+  ],
+  handsOn: ["Humanoids", "Dexterous hands", "Whole-body teleoperation", "Real-robot deployment"],
   homepage: "https://kuangjizuo.com",
   aliases: ["KuangjiZuo", "kuangjizuo", "KUANGJI ZUO", "ZUO Kuangji", "左匡济"],
   seoKeywords: [
@@ -21,6 +29,12 @@ export const profile = {
     "kuangjizuo",
     "embodied AI",
     "humanoid robotics",
+    "humanoid robots",
+    "Unitree G1",
+    "dexterous hands",
+    "dexterous manipulation",
+    "whole-body teleoperation",
+    "real-robot deployment",
     "robot learning",
     "vision-language-action models",
     "VLA",

@@ -6,18 +6,23 @@ import NewsList from "../components/NewsList.astro";
 import PublicationList from "../components/PublicationList.astro";
 import { profile, sameAsLinks } from "../content/profile";
 import { sections } from "../content/publications";
+import { plain, summary } from "../lib/agents";
 
 const scholar = profile.links.find((link) => link.label === "Google Scholar");
+const authorName = (author: string) => author.replace(/[*†‡]+$/, "");
 
+// schema.org data that search engines and AI agents read to understand who this is.
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: profile.name,
   alternateName: [profile.chineseName, profile.displayName, ...profile.aliases],
-  url: profile.homepage,
+  description: summary,
+  url: `${profile.homepage}/`,
   image: `${profile.homepage}${profile.portrait}`,
   email: `mailto:${profile.email}`,
   jobTitle: profile.role,
+  workLocation: { "@type": "Place", name: profile.location },
   affiliation: {
     "@type": "Organization",
     name: "MARS Lab, Nanyang Technological University",
@@ -28,27 +33,34 @@ const structuredData = {
     name: profile.advisor.name,
     url: profile.advisor.url,
   },
-  knowsAbout: profile.seoKeywords,
+  knowsAbout: [...profile.seoKeywords, ...profile.handsOn],
   sameAs: sameAsLinks,
-  subjectOf: sections.flatMap((section) => section.papers).map((pub) => ({
-    "@type": "ScholarlyArticle",
-    headline: pub.title,
-    url: pub.links[0]?.href,
-  })),
+  subjectOf: sections.flatMap((section) =>
+    section.papers.map((pub) => ({
+      "@type": "ScholarlyArticle",
+      headline: plain(pub.title),
+      url: pub.links[0]?.href,
+      author: pub.authors.map((author) => ({ "@type": "Person", name: authorName(author) })),
+      datePublished: pub.venue.match(/\d{4}/)?.[0],
+      publication: pub.venue,
+      about: section.title,
+      keywords: pub.tags.join(", "),
+    })),
+  ),
 };
 ---
 
 <BaseLayout
-  title={`${profile.name} (${profile.chineseName}) | Robot Learning, Humanoids, VLA`}
-  description="Kuangji Zuo (左匡济) is a graduate researcher at NTU MARS Lab working on embodied AI for humanoid robots: VLA models, world action models, robot action generation (ODE Policy, Δ-flow), and gaze-based human-robot interaction (Gaze2Act)."
-  keywords={profile.seoKeywords}
+  title={`${profile.name} (${profile.chineseName}) | Humanoid Robots, Dexterous Hands, VLA`}
+  description="Kuangji Zuo (左匡济), graduate researcher at NTU MARS Lab. Embodied AI for humanoid robots and dexterous hands: VLA and world action models, robot action generation (ODE Policy, Δ-flow, UCA-Flow), humanoid locomotion, and gaze-based human-robot interaction (Gaze2Act)."
+  keywords={[...profile.seoKeywords]}
   canonical={`${profile.homepage}/`}
   image={profile.portrait}
   structuredData={structuredData}
 >
-  <main class="mx-auto max-w-[52rem] px-5 pb-10 pt-12 sm:px-8 sm:pt-20">
-    <Hero />
+  <Hero />
 
+  <main class="mx-auto max-w-[52rem] px-5 pb-10 sm:px-8">
     <section id="news" class="mt-16">
       <SectionHeading title="News" />
       <NewsList />

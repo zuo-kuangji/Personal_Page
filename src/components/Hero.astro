@@ -1,37 +1,67 @@
 ---
+import SectionHeading from "./SectionHeading.astro";
 import { profile } from "../content/profile";
+
+// Minimal Markdown for the bio: **bold** and [text](url).
+const escape = (text: string) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const inline = (md: string) =>
+  escape(md)
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-ink">$1</strong>')
+    .replace(/\[(.+?)\]\((https?:[^)\s]+)\)/g, '<a class="link" href="$2">$1</a>');
 ---
 
-<section class="grid items-start gap-8 sm:grid-cols-[minmax(0,1fr)_10rem] sm:gap-10">
-  <div>
-    <h1 class="text-[2rem] font-semibold leading-tight tracking-[-0.02em] text-ink">
-      {profile.name}
-      <span class="ml-2 text-[0.7em] font-normal tracking-normal text-muted">{profile.chineseName}</span>
-    </h1>
-
-    <div class="mt-4 space-y-3 text-[0.97rem] leading-7 text-ink/90">
-      <p>
-        I am a graduate researcher at <strong class="font-semibold">MARS Lab</strong>, Nanyang Technological
-        University, advised by <a class="link" href={profile.advisor.url}>{profile.advisor.name}</a>.
-      </p>
-      <p>
-        My research focuses on embodied AI for humanoid robots: vision-language-action (VLA) models, world action
-        models, and how robot policies generate actions. I am also interested in natural human-robot interaction,
-        where people guide robots through gaze, language, and context.
-      </p>
-    </div>
-
-    <p class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
-      {profile.links.map((link) => <a class="link font-medium" href={link.href}>{link.label}</a>)}
-    </p>
+<header>
+  <div class="relative h-[clamp(150px,24vw,340px)] overflow-hidden">
+    <img
+      class="h-full w-full object-cover object-[50%_20%]"
+      src={profile.banner}
+      alt="Illustration of Kuangji Zuo at a desk in a lab full of humanoid robots"
+      width="1672"
+      height="557"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-paper/0 from-45% to-paper"></div>
   </div>
 
-  <img
-    class="order-first aspect-square w-32 rounded-full object-cover sm:order-none sm:w-full"
-    src={profile.portrait}
-    alt={`Portrait of ${profile.name}`}
-    width="800"
-    height="800"
-    loading="eager"
-  />
-</section>
+  <div class="mx-auto max-w-[52rem] px-5 sm:px-8">
+    <div class="relative -mt-12 flex flex-col items-start gap-3 sm:-mt-16 sm:flex-row sm:items-end sm:gap-6">
+      <img
+        class="h-24 w-24 shrink-0 rounded-full object-cover shadow-[0_10px_30px_-12px_rgba(0,0,0,0.45)] ring-4 ring-paper sm:h-32 sm:w-32"
+        src={profile.portrait}
+        alt={`Portrait of ${profile.name}`}
+        width="800"
+        height="800"
+        loading="eager"
+      />
+      <div class="pb-1 sm:pb-2">
+        <h1 class="text-[1.75rem] font-semibold leading-tight tracking-[-0.02em] text-ink sm:text-[2.1rem]">
+          {profile.name}
+          <span class="ml-1.5 whitespace-nowrap text-[0.68em] font-normal tracking-normal text-muted">{profile.chineseName}</span>
+        </h1>
+        <p class="mt-0.5 text-[0.92rem] text-muted">Graduate Researcher · MARS Lab, NTU Singapore</p>
+      </div>
+    </div>
+
+    <section id="about" class="mt-10">
+      <SectionHeading title="About Me" />
+    <div class="-mt-1 space-y-3 text-[0.97rem] leading-7 text-ink/90">
+      {profile.bio.map((paragraph) => <p set:html={inline(paragraph)} />)}
+    </div>
+
+    <ul class="mt-4 flex flex-wrap gap-2" aria-label="Hands-on experience">
+      {
+        profile.handsOn.map((skill) => (
+          <li class="rounded-full border border-rule bg-ink/[0.03] px-3 py-1 text-[0.8rem] font-medium text-ink/80">
+            {skill}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
+      {profile.links.map((link) => <a class="link font-medium" href={link.href} rel="me">{link.label}</a>)}
+    </p>
+    </section>
+  </div>
+</header>
