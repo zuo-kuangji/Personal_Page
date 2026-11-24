@@ -1,0 +1,18 @@
+---
+import { profile } from "../content/profile";
+
+interface Props {
+  authors: string[];
+}
+
+const list = Astro.props.authors.map((author) => {
+  const match = author.match(/^(.*?)([*†‡]*)$/);
+  const name = match?.[1] ?? author;
+  return { name, marks: match?.[2] ?? "", me: name === profile.name };
+});
+---
+
+<p class="text-[0.9rem] leading-6 text-muted">
+  {/* Kept on one line: line breaks between these would render as spaces before commas. */}
+  {list.map((a, i) => <>{i > 0 && ", "}{a.me ? <strong class="font-semibold text-ink">{a.name}</strong> : a.name}{a.marks && <sup>{a.marks}</sup>}</>)}
+</p>

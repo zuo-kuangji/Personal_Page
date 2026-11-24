@@ -2,49 +2,36 @@
 import { profile } from "../content/profile";
 ---
 
-<section class="border-b border-rule bg-[#e9e4d8] text-ink">
-  <div class="mx-auto grid max-w-5xl items-center gap-5 px-5 py-7 sm:px-8 md:min-h-[340px] md:grid-cols-[1fr_210px] md:gap-6 md:py-6">
-    <div class="max-w-3xl text-center md:text-left">
-      <p class="text-xs font-semibold uppercase tracking-[0.12em] text-red sm:tracking-[0.2em]">
-        {profile.affiliation}
-      </p>
-      <h1 class="mt-2 text-3xl font-semibold leading-tight text-ink sm:text-4xl md:text-5xl">
-        {profile.name}
-        <span class="block pt-1 text-2xl font-normal text-muted sm:inline sm:pl-3 sm:pt-0 sm:text-3xl md:text-4xl">
-          左匡济
-        </span>
-      </h1>
+<section class="grid items-start gap-8 sm:grid-cols-[minmax(0,1fr)_10rem] sm:gap-10">
+  <div>
+    <h1 class="text-[2rem] font-semibold leading-tight tracking-[-0.02em] text-ink">
+      {profile.name}
+      <span class="ml-2 text-[0.7em] font-normal tracking-normal text-muted">{profile.chineseName}</span>
+    </h1>
 
-      <p class="mx-auto mt-2 max-w-2xl text-base leading-7 text-muted md:mx-0 md:text-lg md:leading-8">
-        {profile.role} at MARS Lab, Nanyang Technological University.
+    <div class="mt-4 space-y-3 text-[0.97rem] leading-7 text-ink/90">
+      <p>
+        I am a graduate researcher at <strong class="font-semibold">MARS Lab</strong>, Nanyang Technological
+        University, advised by <a class="link" href={profile.advisor.url}>{profile.advisor.name}</a>.
       </p>
-
-      <p class="mx-auto mt-2 max-w-2xl text-base leading-7 text-ink sm:text-lg sm:leading-8 md:mx-0 md:text-xl md:leading-9">
-        My research focuses on embodied intelligence for humanoid robots, with an emphasis on vision-language-action learning, human intent understanding, and natural human-robot interaction.
+      <p>
+        My research focuses on embodied AI for humanoid robots: vision-language-action (VLA) models, world action
+        models, and how robot policies generate actions. I am also interested in natural human-robot interaction,
+        where people guide robots through gaze, language, and context.
       </p>
-
-      <div class="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[0.95rem] md:justify-start">
-        {profile.links.map((link, index) => (
-          <>
-            {index > 0 && <span class="text-rule">/</span>}
-            <a
-              class="font-semibold text-ink underline decoration-rule underline-offset-4 hover:text-red"
-              href={link.href}
-            >
-              {link.label}
-            </a>
-          </>
-        ))}
-      </div>
     </div>
 
-    <figure class="order-first mx-auto w-32 overflow-hidden rounded-md border border-rule bg-card shadow-soft sm:w-36 md:order-none md:mx-0 md:w-56 md:justify-self-end">
-      <img
-        class="aspect-[4/5] w-full object-cover"
-        src={profile.portrait}
-        alt={`${profile.name} portrait`}
-        loading="eager"
-      />
-    </figure>
+    <p class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
+      {profile.links.map((link) => <a class="link font-medium" href={link.href}>{link.label}</a>)}
+    </p>
   </div>
+
+  <img
+    class="order-first aspect-square w-32 rounded-full object-cover sm:order-none sm:w-full"
+    src={profile.portrait}
+    alt={`Portrait of ${profile.name}`}
+    width="800"
+    height="800"
+    loading="eager"
+  />
 </section>

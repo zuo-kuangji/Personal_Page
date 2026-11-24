@@ -1,0 +1,24 @@
+---
+import { news } from "../content/news";
+---
+
+<ul class="space-y-2.5">
+  {
+    news.map((item) => (
+      <li class="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-3 text-[0.95rem] leading-7">
+        <span class="tabular-nums text-muted">{item.date}</span>
+        <span class="text-ink/90">
+          {item.text}
+          {item.links?.map((link) => (
+            <>
+              {" "}
+              <a class="text-[0.88rem] text-muted underline decoration-rule underline-offset-4 hover:text-accent" href={link.href}>
+                [{link.label}]
+              </a>
+            </>
+          ))}
+        </span>
+      </li>
+    ))
+  }
+</ul>

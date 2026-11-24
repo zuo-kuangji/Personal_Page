@@ -2,22 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Colors are RGB triplets so Tailwind opacity modifiers (text-ink/90) work. */
 :root {
+  --paper: 250 249 246;
+  --ink: 24 25 28;
+  --muted: 100 102 108;
+  --rule: 222 219 210;
+  --accent: 176 64 50;
   color-scheme: light;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: 18 19 21;
+    --ink: 234 233 228;
+    --muted: 160 160 156;
+    --rule: 52 54 58;
+    --accent: 236 130 112;
+    color-scheme: dark;
+  }
 }
 
-body {
-  margin: 0;
+@layer base {
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    margin: 0;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.2);
+  }
 }
 
-a {
-  text-underline-offset: 4px;
-}
-
-::selection {
-  background: rgba(184, 76, 67, 0.22);
+@layer components {
+  .link {
+    @apply text-ink underline decoration-ink/25 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent/60;
+  }
 }

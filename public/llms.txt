@@ -2,7 +2,22 @@
 
 Kuangji Zuo, also known as ZUO Kuangji and 左匡济, is a graduate researcher at NTU MARS Lab in Singapore, advised by Prof. Jianfei Yang.
 
-Research focus: embodied AI, humanoid robotics, human-robot interaction, vision-language-action models, VLA, whole-body VLA, whole-body action models, WAM, gaze-conditioned robot learning, and intent-aware robot policies.
+Research focus: embodied AI, robot learning, humanoid robotics, vision-language-action models (VLA), whole-body VLA, world action models (WAM), action generation for robot foundation models (flow matching, neural ODE policies), and human-robot interaction with gaze-conditioned, intent-aware robot policies.
+
+## Selected publications
+
+- ODE Policy: Robot Learning via Action Dynamics, Not Actions (arXiv 2026, co-first author). Paper: https://arxiv.org/abs/2611.01729 · Project: https://ntumars.github.io/ODE/ · Code: https://github.com/NTUMARS/ODE-POLICY
+- Δ Flow Matching for Robot Foundation Models (arXiv 2026, co-first author). Paper: https://arxiv.org/abs/2610.15794 · Project: https://zuo-kuangji.github.io/delta-flow/ · Code: https://github.com/NTUMARS/delta-flow-matching
+- AURA: Adaptive Uncertainty Enables Emergent Robot Behaviors Without Scaling (preprint 2026). Project: https://ntumars.github.io/AURA/
+- Unified Condition-Action Modeling for Accurate One-Step Action Generation (CoRL 2026). Paper: https://arxiv.org/abs/2608.16153 · Project: https://uca-policy.github.io/UCA.github.io/
+- FLASH: Efficient Visuomotor Policy via Sparse Sampling (NeurIPS 2026). Paper: https://arxiv.org/abs/2605.15492 · Project: https://b1ue-jay.github.io/FLASH/
+- ADAPT: Analytical Disturbance-Aware Policy Training for Humanoid Locomotion (CoRL 2026). Paper: https://arxiv.org/abs/2606.16542 · Project: https://blyu413.github.io/adapt-locomotion/
+- Gaze2Act: Gaze-Conditioned Vision-Language-Action Policies for Interactive Robot Manipulation (arXiv 2026, co-first author). Paper: https://arxiv.org/abs/2605.30282 · Project: https://zuo-kuangji.github.io/Gaze2Act/ · Code: https://github.com/zuo-kuangji/Gaze2Act
+- EM-Fall: Embodied mmWave Sensing for Day-and-Night Fall Detection on Humanoid Robots (IROS 2026). Paper: https://arxiv.org/abs/2606.11109 · Project: https://lu-yanshuo.github.io/EM-Fall-Webpage/
+
+Full list: https://kuangjizuo.com/#publications
+
+## Links
 
 Homepage: https://kuangjizuo.com/
 Email: kuangji001@e.ntu.edu.sg

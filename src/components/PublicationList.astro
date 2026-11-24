@@ -1,29 +1,95 @@
 ---
-import { publications } from "../content/publications";
+import Authors from "./Authors.astro";
+import { sections } from "../content/publications";
+
+const linkClass = "text-ink underline decoration-rule underline-offset-4 hover:text-accent";
+const mainLink = (links: { label: string; href: string }[]) =>
+  links.find((l) => l.label === "Project")?.href ?? links[0].href;
 ---
 
-<div class="space-y-4">
-  {publications.map((pub) => (
-    <article class="grid gap-4 rounded-md border border-rule bg-card p-4 shadow-[0_10px_30px_rgba(22,23,22,0.04)] md:grid-cols-[220px_1fr]">
-      <img
-        class="aspect-[16/10] w-full rounded border border-rule bg-paper object-contain"
-        src={pub.image}
-        alt={`${pub.title} preview`}
-        loading="lazy"
-      />
-      <div>
-        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span class="text-sm font-semibold text-red">{pub.year}</span>
-          <span class="text-sm font-medium text-ink">{pub.venue}</span>
-        </div>
-        <h3 class="mt-2 text-lg font-semibold leading-snug text-ink">{pub.title}</h3>
-        <p class="mt-2 text-sm leading-6 text-muted">{pub.authors}</p>
-        <div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold">
-          {pub.links.map((link) => (
-            <a class="text-ink underline decoration-rule underline-offset-4 hover:text-red" href={link.href}>{link.label}</a>
-          ))}
-        </div>
+{
+  sections.map((section) => (
+    <div class="mt-10 first:mt-0">
+      <h3 class="mb-5 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-accent">{section.title}</h3>
+      <div class={section.compact ? "space-y-5" : "space-y-8"}>
+        {section.papers.map((pub) => (
+          <article class:list={[!section.compact && "grid gap-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6"]}>
+            {!section.compact && (
+              <a
+                href={mainLink(pub.links)}
+                class="group relative block self-start overflow-hidden rounded-md border border-rule bg-white"
+                data-hover-clip={pub.clip ? `/videos/${pub.clip}.mp4` : undefined}
+              >
+                <img
+                  class="aspect-[16/10] w-full object-contain p-1"
+                  src={pub.image}
+                  alt={pub.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+                {pub.clip && (
+                  <video
+                    class="absolute inset-0 h-full w-full bg-white object-cover opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+                    poster={`/videos/${pub.clip}.jpg`}
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    aria-hidden="true"
+                  />
+                )}
+              </a>
+            )}
+            <div>
+              <h4 class:list={["leading-snug text-ink", section.compact ? "font-medium" : "font-semibold"]}>
+                {pub.title}
+                {pub.badge && (
+                  <span class="ml-1.5 inline-block rounded bg-accent/10 px-1.5 py-0.5 align-middle text-[0.7rem] font-semibold text-accent">
+                    {pub.badge}
+                  </span>
+                )}
+              </h4>
+              <div class="mt-1">
+                <Authors authors={pub.authors} />
+              </div>
+              <p class="mt-0.5 text-[0.88rem] text-muted">
+                <span class="italic">{pub.venue}</span>
+                {pub.links.map((link) => (
+                  <>
+                    <span class="mx-1.5 text-rule">/</span>
+                    <a class={linkClass} href={link.href}>{link.label}</a>
+                  </>
+                ))}
+              </p>
+              <ul class="mt-2 flex flex-wrap gap-1.5" aria-label="Tags">
+                {pub.tags.map((tag) => (
+                  <li class="rounded bg-ink/[0.06] px-1.5 py-0.5 text-[0.72rem] font-medium text-muted">{tag}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
       </div>
-    </article>
-  ))}
-</div>
+    </div>
+  ))
+}
+
+<script>
+  // Covers show the paper figure; hovering plays the clip (like a GIF). Clips load on first hover.
+  document.querySelectorAll<HTMLAnchorElement>("a[data-hover-clip]").forEach((link) => {
+    const video = link.querySelector("video");
+    if (!video) return;
+    const start = () => {
+      if (!video.src) video.src = link.dataset.hoverClip!;
+      video.play().catch(() => {});
+    };
+    const stop = () => {
+      video.pause();
+      video.currentTime = 0;
+    };
+    link.addEventListener("mouseenter", start);
+    link.addEventListener("mouseleave", stop);
+    link.addEventListener("focus", start);
+    link.addEventListener("blur", stop);
+  });
+</script>

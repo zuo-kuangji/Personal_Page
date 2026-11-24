@@ -1,4 +1,5 @@
 ---
+import "@fontsource-variable/inter";
 import "../styles/global.css";
 
 interface Props {
@@ -6,10 +7,12 @@ interface Props {
   description: string;
   keywords?: string[];
   canonical?: string;
+  image?: string;
   structuredData?: Record<string, unknown>;
 }
 
-const { title, description, keywords = [], canonical, structuredData } = Astro.props;
+const { title, description, keywords = [], canonical, image, structuredData } = Astro.props;
+const imageUrl = image ? new URL(image, Astro.site ?? canonical).toString() : undefined;
 ---
 
 <!doctype html>
@@ -17,6 +20,7 @@ const { title, description, keywords = [], canonical, structuredData } = Astro.p
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
     <meta name="description" content={description} />
     {keywords.length > 0 && <meta name="keywords" content={keywords.join(", ")} />}
     <meta name="author" content="Kuangji Zuo" />
@@ -28,19 +32,18 @@ const { title, description, keywords = [], canonical, structuredData } = Astro.p
     {canonical && <link rel="canonical" href={canonical} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:image" content="/images/gaze2act-teaser.png" />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
     <meta property="og:site_name" content="Kuangji Zuo" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/images/gaze2act-teaser.png" />
+    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
-    <title>{title}</title>
   </head>
-  <body class="bg-paper text-ink antialiased">
+  <body>
     <slot />
   </body>
 </html>
