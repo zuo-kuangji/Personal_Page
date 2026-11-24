@@ -1,6 +1,17 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
 import { profile } from "../content/profile";
+import { langs, pick, ui, type Lang } from "../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const other: Lang = lang === "en" ? "zh" : "en";
+const bio = pick(lang, profile.bio, profile.bioZh);
+const handsOn = pick(lang, profile.handsOn, profile.handsOnZh);
 
 // Minimal Markdown for the bio: **bold** and [text](url).
 const escape = (text: string) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -15,13 +26,21 @@ const inline = (md: string) =>
     <img
       class="h-full w-full object-cover object-[50%_20%]"
       src={profile.banner}
-      alt="Illustration of Kuangji Zuo at a desk in a lab full of humanoid robots"
+      alt={t.bannerAlt}
       width="1672"
       height="557"
       loading="eager"
       fetchpriority="high"
     />
     <div class="absolute inset-0 bg-gradient-to-b from-paper/0 from-45% to-paper"></div>
+    <a
+      href={langs[other].path}
+      hreflang={langs[other].htmlLang}
+      lang={langs[other].htmlLang}
+      class="absolute right-4 top-4 rounded-full bg-black/45 px-3.5 py-1.5 text-[0.82rem] font-medium text-white backdrop-blur transition-colors hover:bg-black/65 sm:right-6 sm:top-5"
+    >
+      {langs[other].switchLabel}
+    </a>
   </div>
 
   <div class="mx-auto max-w-[52rem] px-5 sm:px-8">
@@ -29,39 +48,57 @@ const inline = (md: string) =>
       <img
         class="h-24 w-24 shrink-0 rounded-full object-cover shadow-[0_10px_30px_-12px_rgba(0,0,0,0.45)] ring-4 ring-paper sm:h-32 sm:w-32"
         src={profile.portrait}
-        alt={`Portrait of ${profile.name}`}
+        alt={lang === "zh" ? `${profile.chineseName}的照片` : `Portrait of ${profile.name}`}
         width="800"
         height="800"
         loading="eager"
       />
       <div class="pb-1 sm:pb-2">
         <h1 class="text-[1.75rem] font-semibold leading-tight tracking-[-0.02em] text-ink sm:text-[2.1rem]">
-          {profile.name}
-          <span class="ml-1.5 whitespace-nowrap text-[0.68em] font-normal tracking-normal text-muted">{profile.chineseName}</span>
+          {/* 左匡济 is drawn as an image in xingkai calligraphy (same as the 济 signature); its alt text keeps the name readable. */}
+          {
+            lang === "zh" ? (
+              <>
+                <img class="inline-block h-[1.45em] w-auto align-[-0.32em]" src="/images/name-zh.png" alt={profile.chineseName} width="528" height="171" />
+                <span class="ml-2 whitespace-nowrap text-[0.62em] font-normal tracking-normal text-muted">{profile.name}</span>
+              </>
+            ) : (
+              <>
+                {profile.name}
+                <img class="ml-3 inline-block h-[1.05em] w-auto align-[-0.18em] opacity-60" src="/images/name-zh.png" alt={profile.chineseName} width="528" height="171" />
+              </>
+            )
+          }
         </h1>
-        <p class="mt-0.5 text-[0.92rem] text-muted">Graduate Researcher · MARS Lab, NTU Singapore</p>
+        <p class="mt-0.5 text-[0.92rem] text-muted">{t.subtitle}</p>
       </div>
     </div>
 
     <section id="about" class="mt-10">
-      <SectionHeading title="About Me" />
-    <div class="-mt-1 space-y-3 text-[0.97rem] leading-7 text-ink/90">
-      {profile.bio.map((paragraph) => <p set:html={inline(paragraph)} />)}
-    </div>
+      <SectionHeading title={t.about} />
+      <div class="-mt-1 space-y-3 text-[0.97rem] leading-7 text-ink/90">
+        {bio.map((paragraph) => <p set:html={inline(paragraph)} />)}
+      </div>
 
-    <ul class="mt-4 flex flex-wrap gap-2" aria-label="Hands-on experience">
-      {
-        profile.handsOn.map((skill) => (
-          <li class="rounded-full border border-rule bg-ink/[0.03] px-3 py-1 text-[0.8rem] font-medium text-ink/80">
-            {skill}
-          </li>
-        ))
-      }
-    </ul>
+      <ul class="mt-4 flex flex-wrap gap-2" aria-label={t.handsOnLabel}>
+        {
+          handsOn.map((skill) => (
+            <li class="rounded-full border border-rule bg-ink/[0.03] px-3 py-1 text-[0.8rem] font-medium text-ink/80">
+              {skill}
+            </li>
+          ))
+        }
+      </ul>
 
-    <p class="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
-      {profile.links.map((link) => <a class="link font-medium" href={link.href} rel="me">{link.label}</a>)}
-    </p>
+      <p class="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
+        {
+          profile.links.map((link) => (
+            <a class="link font-medium" href={link.href} rel="me">
+              {lang === "zh" && link.label === "Email" ? "邮箱" : link.label}
+            </a>
+          ))
+        }
+      </p>
     </section>
   </div>
 </header>

@@ -2,6 +2,7 @@
 import { profile } from "../content/profile";
 import { news } from "../content/news";
 import { sections } from "../content/publications";
+import { formatMonth } from "../i18n";
 
 /** Markdown -> plain text (drops **bold** and [link](url) syntax). */
 export const plain = (md: string) => md.replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[(.+?)\]\((.+?)\)/g, "$1");
@@ -31,6 +32,7 @@ export function llmsTxt() {
     "",
     `- Homepage: ${profile.homepage}/`,
     `- Full profile in Markdown: ${profile.homepage}/index.md`,
+    `- Chinese homepage (中文主页): ${profile.homepage}/zh/`,
     ...profile.links.map((l) => `- ${l.label}: ${l.href.replace("mailto:", "")}`),
     "",
   ];
@@ -50,7 +52,7 @@ export function indexMd() {
     "",
     "## News",
     "",
-    ...news.map((n) => `- **${n.date}**: ${n.text}${n.links ? " " + n.links.map((l) => `[${l.label}](${l.href})`).join(" ") : ""}`),
+    ...news.map((n) => `- **${formatMonth(n.month, "en")}**: ${n.text}${n.links ? " " + n.links.map((l) => `[${l.label}](${l.href})`).join(" ") : ""}`),
     "",
     "## Publications",
     "",

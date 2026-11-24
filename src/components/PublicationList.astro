@@ -1,6 +1,14 @@
 ---
 import Authors from "./Authors.astro";
 import { sections } from "../content/publications";
+import { ui, type Lang } from "../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels: Record<string, string> = ui[lang].linkLabels;
 
 const linkClass = "text-ink underline decoration-rule underline-offset-4 hover:text-accent";
 const mainLink = (links: { label: string; href: string }[]) =>
@@ -10,7 +18,7 @@ const mainLink = (links: { label: string; href: string }[]) =>
 {
   sections.map((section) => (
     <div class="mt-10 first:mt-0">
-      <h3 class="mb-5 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-accent">{section.title}</h3>
+      <h3 class="mb-5 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-accent">{lang === "zh" ? section.titleZh : section.title}</h3>
       <div class={section.compact ? "space-y-5" : "space-y-8"}>
         {section.papers.map((pub) => (
           <article class:list={[!section.compact && "grid gap-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6"]}>
@@ -57,7 +65,7 @@ const mainLink = (links: { label: string; href: string }[]) =>
                 {pub.links.map((link) => (
                   <>
                     <span class="mx-1.5 text-rule">/</span>
-                    <a class={linkClass} href={link.href}>{link.label}</a>
+                    <a class={linkClass} href={link.href}>{labels[link.label] ?? link.label}</a>
                   </>
                 ))}
               </p>

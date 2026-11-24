@@ -12,17 +12,6 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: 18 19 21;
-    --ink: 234 233 228;
-    --muted: 160 160 156;
-    --rule: 52 54 58;
-    --accent: 236 130 112;
-    color-scheme: dark;
-  }
-}
-
 @layer base {
   body {
     @apply bg-paper font-sans text-ink antialiased;

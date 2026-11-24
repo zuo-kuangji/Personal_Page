@@ -1,0 +1,92 @@
+---
+// The whole homepage, rendered once per language (src/pages/index.astro and src/pages/zh/index.astro).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "./Hero.astro";
+import SectionHeading from "./SectionHeading.astro";
+import NewsList from "./NewsList.astro";
+import PublicationList from "./PublicationList.astro";
+import { profile, sameAsLinks } from "../content/profile";
+import { sections } from "../content/publications";
+import { plain, summary } from "../lib/agents";
+import { langs, ui, type Lang } from "../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const scholar = profile.links.find((link) => link.label === "Google Scholar");
+const authorName = (author: string) => author.replace(/[*†‡]+$/, "");
+const pageUrl = `${profile.homepage}${langs[lang].path}`;
+
+// schema.org data that search engines and AI agents read to understand who this is.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  alternateName: [profile.chineseName, profile.displayName, ...profile.aliases],
+  description: lang === "zh" ? t.description : summary,
+  url: pageUrl,
+  image: `${profile.homepage}${profile.portrait}`,
+  email: `mailto:${profile.email}`,
+  jobTitle: profile.role,
+  workLocation: { "@type": "Place", name: profile.location },
+  affiliation: {
+    "@type": "Organization",
+    name: "MARS Lab, Nanyang Technological University",
+    url: "https://www.ntu.edu.sg/",
+  },
+  advisor: {
+    "@type": "Person",
+    name: profile.advisor.name,
+    url: profile.advisor.url,
+  },
+  knowsAbout: [...profile.seoKeywords, ...profile.handsOn, ...profile.handsOnZh],
+  sameAs: sameAsLinks,
+  subjectOf: sections.flatMap((section) =>
+    section.papers.map((pub) => ({
+      "@type": "ScholarlyArticle",
+      headline: plain(pub.title),
+      url: pub.links[0]?.href,
+      author: pub.authors.map((author) => ({ "@type": "Person", name: authorName(author) })),
+      datePublished: pub.venue.match(/\d{4}/)?.[0],
+      publication: pub.venue,
+      about: section.title,
+      keywords: pub.tags.join(", "),
+    })),
+  ),
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={t.title}
+  description={t.description}
+  keywords={[...profile.seoKeywords]}
+  canonical={pageUrl}
+  image={profile.portrait}
+  structuredData={structuredData}
+>
+  <Hero lang={lang} />
+
+  <main class="mx-auto max-w-[52rem] px-5 pb-10 sm:px-8">
+    <section id="news" class="mt-16">
+      <SectionHeading title={t.news} />
+      <NewsList lang={lang} />
+    </section>
+
+    <section id="publications" class="mt-16">
+      <SectionHeading title={t.publications}>
+        {scholar && <a class="text-sm text-muted hover:text-accent" href={scholar.href}>{t.scholarLink}</a>}
+      </SectionHeading>
+      <p class="-mt-2 mb-6 text-[0.82rem] text-muted">{t.marks}</p>
+      <PublicationList lang={lang} />
+    </section>
+
+    <footer class="mt-20 flex flex-col items-center gap-2 text-[0.75rem] text-muted/70">
+      <img class="h-11 w-11 opacity-75" src="/images/signature-ji.png" alt="济" width="160" height="160" />
+      <span>{t.updated}</span>
+    </footer>
+  </main>
+</BaseLayout>

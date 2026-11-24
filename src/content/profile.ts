@@ -19,6 +19,13 @@ export const profile = {
     "I build and test these policies on real hardware, mainly **humanoids with dexterous hands**.",
   ],
   handsOn: ["Humanoids", "Dexterous hands", "Whole-body teleoperation", "Real-robot deployment"],
+  /** Chinese bio, same Markdown rules as `bio`. */
+  bioZh: [
+    "我是南洋理工大学 **MARS Lab** 的研究生研究员，导师是 [Jianfei Yang 教授](https://marsyang.site/)。",
+    "我的研究方向是**机器人学习**与**人形机器人**的交叉，重点关注**视觉-语言-动作（VLA）模型**、**世界动作模型**，以及流匹配（flow matching）、神经 ODE 等**生成式动作策略**。我也关注**人机交互**，尤其是人如何通过注视和语言来引导机器人。",
+    "这些策略我都在真实硬件上搭建和测试，主要是**带灵巧手的人形机器人**。",
+  ],
+  handsOnZh: ["人形机器人", "灵巧手", "全身遥操作", "真机部署"],
   homepage: "https://kuangjizuo.com",
   aliases: ["KuangjiZuo", "kuangjizuo", "KUANGJI ZUO", "ZUO Kuangji", "左匡济"],
   seoKeywords: [

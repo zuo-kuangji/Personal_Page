@@ -16,6 +16,7 @@ export type Publication = {
 
 export type Section = {
   title: string;
+  titleZh: string;
   /** Sections without thumbnails render as a compact list. */
   compact?: boolean;
   papers: Publication[];
@@ -24,6 +25,7 @@ export type Section = {
 export const sections: Section[] = [
   {
     title: "Robot Policy Learning",
+    titleZh: "机器人策略学习",
     papers: [
       {
         title: "ODE Policy: Robot Learning via Action Dynamics, Not Actions",
@@ -109,6 +111,7 @@ export const sections: Section[] = [
   },
   {
     title: "Humanoid Locomotion",
+    titleZh: "人形机器人运动控制",
     papers: [
       {
         title: "ADAPT: Analytical Disturbance-Aware Policy Training for Humanoid Locomotion",
@@ -131,6 +134,7 @@ export const sections: Section[] = [
   },
   {
     title: "Human-Robot Interaction",
+    titleZh: "人机交互",
     papers: [
       {
         title:
