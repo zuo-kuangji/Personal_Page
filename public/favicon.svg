@@ -1,7 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#f7f5ef"/>
-  <path d="M14 33c7-11 15-16 24-16 6 0 10 2 12 6" fill="none" stroke="#161716" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="39" cy="25" r="7" fill="#3d8d86"/>
-  <circle cx="39" cy="25" r="2.5" fill="#161716"/>
-  <path d="M18 44c8-3 15-4 28-2" fill="none" stroke="#b84c43" stroke-width="4" stroke-linecap="round"/>
+  <style>
+    .body { fill: #18191c; }
+    .lamp { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .body { fill: #ececea; }
+      .lamp { fill: #18191c; }
+    }
+  </style>
+  <rect class="body" x="19" y="6" width="26" height="24" rx="10"/>
+  <rect class="lamp" x="23.5" y="14" width="17" height="6.5" rx="3.25"/>
+  <rect class="body" x="28.5" y="29" width="7" height="5"/>
+  <path class="body" d="M10 60V47a11 11 0 0 1 11-11h22a11 11 0 0 1 11 11v13z"/>
+  <circle class="lamp" cx="32" cy="47" r="3.2"/>
 </svg>

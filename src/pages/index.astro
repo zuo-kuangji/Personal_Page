@@ -51,7 +51,7 @@ const structuredData = {
 ---
 
 <BaseLayout
-  title={`${profile.name} (${profile.chineseName}) | Humanoid Robots, Dexterous Hands, VLA`}
+  title={`${profile.name} (${profile.chineseName}) | Humanoid Robots, Dexterous Hands, Embodied AI`}
   description="Kuangji Zuo (左匡济), graduate researcher at NTU MARS Lab. Embodied AI for humanoid robots and dexterous hands: VLA and world action models, robot action generation (ODE Policy, Δ-flow, UCA-Flow), humanoid locomotion, and gaze-based human-robot interaction (Gaze2Act)."
   keywords={[...profile.seoKeywords]}
   canonical={`${profile.homepage}/`}
@@ -74,6 +74,9 @@ const structuredData = {
       <PublicationList />
     </section>
 
-    <footer class="mt-20 text-center text-[0.75rem] text-muted/70">Last updated Nov 2026</footer>
+    <footer class="mt-20 flex flex-col items-center gap-2 text-[0.75rem] text-muted/70">
+      <img class="h-11 w-11 opacity-75 dark:invert" src="/images/signature-ji.png" alt="济" width="160" height="160" />
+      <span>Last updated Nov 2026</span>
+    </footer>
   </main>
 </BaseLayout>
