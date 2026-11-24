@@ -25,6 +25,8 @@ const imageUrl = image ? new URL(image, Astro.site ?? canonical).toString() : un
     {keywords.length > 0 && <meta name="keywords" content={keywords.join(", ")} />}
     <meta name="author" content="Kuangji Zuo" />
     <meta name="robots" content="index, follow" />
+    <!-- Search engine ownership verification (public tokens). -->
+    <meta name="google-site-verification" content="8y7SDRq0fqru1kJJmhqX1gR7tDet1exCDwVVeCiac70" />
     <meta name="geo.region" content="SG" />
     <meta name="geo.placename" content="Singapore" />
     <meta name="institution" content="MARS Lab, Nanyang Technological University" />
